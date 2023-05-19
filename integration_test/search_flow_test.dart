@@ -5,26 +5,37 @@ import 'package:tddtest/main.dart';
 
 main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  
-  group('Test searching for a term and then clicking opening the result', () {
 
-    testWidgets('search for a term and then click on the result',
+  group('Search Flow Integration Test', () {
+    testWidgets('search for a term and then see results',
         (tester) async {
       await tester.pumpWidget(const MyApp());
 
-      // ARRANGE
+      // ##### ARRANGE
       const searchTerm = 'berry';
 
-      // ACT
-      await tester.enterText(find.byKey(const Key('search-field')), searchTerm);
-      await tester.pumpAndSettle(const Duration(seconds: 2)); // the delay here is just for demonstration purposes, so we can see the effects
+      // ##### ASSERT
+      // if we don't enter a search term, we should not see the list yet
+      expect(find.byType(ListTile), findsNothing);
 
-      // ASSERT
+      // ##### ACT
+      await tester.enterText(find.byKey(const Key('search-field')), searchTerm);
+      await tester.pumpAndSettle(const Duration(
+          seconds:
+              2)); // the delay here is just for demonstration purposes, so we can see the effects
+
+      // ##### ASSERT
       expect(find.byType(ListTile), findsWidgets);
 
-      // ACT
-      await tester.tap(find.byType(ListTile).first);
+      final firstListTileItem = find.byType(ListTile).first;
 
+      // make sure the first item is visible
+      await tester.ensureVisible(firstListTileItem);
+
+      // ##### ACT
+      await tester.tap(firstListTileItem);
+
+      // again, just a delay for demonstration purposes
       await Future.delayed(const Duration(seconds: 6));
     });
   });

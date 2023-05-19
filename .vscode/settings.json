@@ -17,5 +17,8 @@
         "**/.dart_tool": true,
         ".dart_tool": true
     },
-    "explorerExclude.backup": {}
+    "explorerExclude.backup": {},
+    "cSpell.words": [
+        "tddtest"
+    ]
 }

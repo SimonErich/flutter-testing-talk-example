@@ -12,13 +12,13 @@ class SuperSearchResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // get results for the given query
-    final results = getSearchResults(query);
-
     // if no query is given, show instructions
     if (query.isEmpty) {
       return const Center(child: Text('Please enter a search term'));
     }
+
+    // get results for the given query
+    final results = getSearchResults(query);
 
     // otherwise show a list of all items that match the query
     return ListView(
